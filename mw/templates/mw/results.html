@@ -35,7 +35,7 @@
       <script>
       $(document).ready(function() {
           $("button").click(function() {
-              $("#results").load("{% static 'hello.html' %}", function(html) {
+              $("#results").load("{% static 'results/query_results.html' %}", function(html) {
               console.log("Results updated");
               });
           });

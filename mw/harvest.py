@@ -14,6 +14,8 @@ import pandas as pd
 from django.conf import settings
 from django.shortcuts import render
 
+from .heavy_lifting import heavy_lifting
+
 HUMAN_DATETIME  = "%A, %B %d, %Y at %H:%M:%S %z"
 
 def indy_time():
@@ -24,6 +26,14 @@ def indy_time():
 
 
 def harvest(request, fancy=True):
+
+    submit_id = indy_time()
+    context = {
+        'submit_id': submit_id,
+    }
+
+    heavy_lifting()
+    return render(request, 'mw/results.html', context)
 
     chrome_options = Options()
     chrome_options.add_argument('--headless')
