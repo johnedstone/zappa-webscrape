@@ -1,0 +1,29 @@
+---
+info:
+  django_settings: mw_webscrape.settings
+  profile_name: your_aws_profile_in_credentials_file
+  project_name": your_project_name 
+  aws_region: 'e.g., us-east-2'
+  runtime: python3.6
+  keep_warm: true
+  domain: "yourapp.yourdomain.com"
+  s3_bucket: "your bucket"
+  slim_handler: true
+  aws_environment_variables:
+    DEBUG: "on"
+    VARS_ENCRYPTED: "off"
+    # settings for site to scrape:
+    USER: "some user_encrypted_with_encrypted_helper"
+    PW: "some passwd_encrypted_with_encrypted_helper"
+    URL: "some url"
+    DASHBOARD: "some url"
+    ORDERS: "some url"
+    #s3 for uploading results
+    BUCKET_NAME: your_bucket_name
+    REGION_NAME: your_bucket_region
+    S3_USER_ACCESS_KEY_ID: for_uploading_s3_result_encrypted_with_encrypted_helpers
+    S3_SECRET_ACCESS_KEY: for_uploading_s3_result_encrypted_with_encrypted_helpers
+
+# Keep this file in a secure place
+
+# vim: ai et ts=2 sts=2 sw=2 nu ru

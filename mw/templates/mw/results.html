@@ -1,0 +1,45 @@
+{% load static %}<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Submission</title>
+    <link rel="icon" href="{% static 'mw/favicon_1x1.png' %}" sizes="1x1" type="image/png" >
+    <!--
+    <link rel="stylesheet" href="style.css">
+    -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        div.intro {
+            font-style: italic;
+            font-family:Tahoma,Verdana,sans-serif;
+            // white-space: pre;
+        }
+        div {
+            color: #005dab;
+            margin: 1em;
+        }
+        #results {
+            margin: 0;
+        }
+        p, button {
+            color: #005dab;
+            margin: 0.2em;
+        }
+    </style>
+  </head>
+  <body>
+      <div class="intro">
+          <p>Submitted on {{ submit_id }}.</p>
+          <button>Refresh Results</button>
+      </div>
+      <div id="results"></div>
+      <script>
+      $(document).ready(function() {
+          $("button").click(function() {
+              $("#results").load("{% static 'hello.html' %}", function(html) {
+              console.log("Results updated");
+              });
+          });
+      });
+      </script>
+  </body>
+</html>
