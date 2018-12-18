@@ -28,9 +28,9 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
     fh.close()
     '''
 
-    #fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
-    #fh.write(submit_id)
-    #fh.close()
+    fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
+    fh.write(submit_id)
+    fh.close()
     return
 
 #    #with io.StringIO() as fh:
