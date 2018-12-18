@@ -31,7 +31,25 @@ Simple Zappa Webscraping with Selenium, Pandas, and BeautifulSoup
 * http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 
 ##### Problems writing from lambda to S3
-* https://edgarroman.github.io/zappa-django-guide/aws_network/
+* Key: https://gist.github.com/reggi/dc5f2620b7b4f515e68e46255ac042a7
+* https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-public-private-vpc.html
+* https://edgarroman.github.io/zappa-django-guide/aws_network_primer/#general-behavior-and-internet-access 
+* https://docs.aws.amazon.com/lambda/latest/dg/vpc.html#vpc-internet
+* https://aws.amazon.com/blogs/aws/new-vpc-endpoint-for-amazon-s3/
+
+```
+https://stackoverflow.com/questions/35455281/aws-lambda-how-to-setup-a-nat-gateway-for-a-lambda-function-with-vpc-access
+setup new subnets for your lambda (with CIDRs not overlapping your existing subnets). You need:
+one subnet which will be pointing to an Internet Gateway (IGW) to be used by the NAT (let's call it A)
+several pointing to the NAT to be used by your lambda (B, C and D)
+add a NAT gateway: set the subnet to A
+set your lambda VPC subnets to B, C and D
+create 2 routes table:
+one that points to your NAT with destination 0.0.0.0/0
+one that points to your IGW (should already exists) with destination 0.0.0.0/0
+update the subnet A to use the route table pointing to the IGW
+update the subnets B, C and D to use the route table pointing to the NAT
+```
 
 ### How to mock a request
 

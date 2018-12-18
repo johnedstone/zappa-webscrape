@@ -25,6 +25,11 @@ def harvest(request, fancy=True):
     }
 
     #heavy_lifting(submit_id=submit_id)
+    from django.core.files.base import ContentFile
+    from django.core.files.storage import default_storage
+    fh = default_storage.open(settings.QUERY_RESULTS, 'w')
+    fh.write(submit_id)
+    fh.close()
 
     return render(request, 'mw/results.html', context)
 
