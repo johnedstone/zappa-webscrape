@@ -31,7 +31,7 @@ Simple Zappa Webscraping with Selenium, Pandas, and BeautifulSoup
 * http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 
 ##### Problems writing from lambda to S3
-* Next: https://github.com/Miserlou/Zappa/issues/1043
+* Next: https://github.com/Miserlou/Zappa/issues/1043 - this explains the problem
 * Key: https://gist.github.com/reggi/dc5f2620b7b4f515e68e46255ac042a7
 * https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-public-private-vpc.html
 * https://edgarroman.github.io/zappa-django-guide/aws_network_primer/#general-behavior-and-internet-access 
