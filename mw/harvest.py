@@ -22,12 +22,18 @@ def harvest(request, fancy=True):
     context = {
         'submit_id': submit_id,
         'fancy': fancy,
+        'results_path': 'https://{}/{}/{}'.format(
+            settings.AWS_S3_CUSTOM_DOMAIN,
+            settings.RESULTFILES_LOCATION,
+            'results.html',
+            ),
     }
 
     #heavy_lifting(submit_id=submit_id)
+
     from django.core.files.base import ContentFile
     from django.core.files.storage import default_storage
-    fh = default_storage.open(settings.QUERY_RESULTS, 'w')
+    fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
     fh.write(submit_id)
     fh.close()
 

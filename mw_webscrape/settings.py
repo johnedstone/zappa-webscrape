@@ -39,17 +39,16 @@ USER = os.getenv('USER')
 PW = os.getenv('PW')
 DASHBOARD = os.getenv('DASHBOARD') # Can not navigate directly
 ORDERS = os.getenv('ORDERS')
-S3_USER_ACCESS_KEY_ID = os.getenv('S3_USER_ACCESS_KEY_ID')
-S3_SECRET_ACCESS_KEY = os.getenv('S3_SECRET_ACCESS_KEY')
-QUERY_RESULTS = os.getenv('QUERY_RESULTS', 'path_to_write_S3_results')
 
 FRAMEWORK = os.getenv('FRAMEWORK', '')
 if FRAMEWORK == 'Zappa' and VARS_ENCRYPTED:
     # settings for website to scrape
     USER = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(USER))['Plaintext'].decode('utf8')
     PW = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(PW))['Plaintext'].decode('utf8')
-    S3_USER_ACCESS_KEY_ID = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(S3_USER_ACCESS_KEY_ID))['Plaintext'].decode('utf8')
-    S3_SECRET_ACCESS_KEY = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(S3_SECRET_ACCESS_KEY))['Plaintext'].decode('utf8')
+
+    # collectstatic, not zappa, but don't interfere
+    # S3_USER_ACCESS_KEY_ID = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(S3_USER_ACCESS_KEY_ID))['Plaintext'].decode('utf8')
+    # S3_SECRET_ACCESS_KEY = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(S3_SECRET_ACCESS_KEY))['Plaintext'].decode('utf8')
 
 TEMPLATES = [
     {
@@ -59,21 +58,32 @@ TEMPLATES = [
     },
 ]
 
+## collectstatic
 AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKET_NAME')
-# Tell django-storages the domain to use to refer to static files.
+# Tell django-storages the domain to use to refer to static files, for templates
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-AWS_S3_REGION_NAME = os.getenv('REGION_NAME')
-AWS_ACCESS_KEY_ID = S3_USER_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY = S3_SECRET_ACCESS_KEY
+
+if not FRAMEWORK == 'Zappa' and not VARS_ENCRYPTED:
+    # collectstatic, not zappa, but do, yes, interfere
+    # so, only use when running collectstatic on the cli
+
+    S3_USER_ACCESS_KEY_ID = os.getenv('S3_USER_ACCESS_KEY_ID')
+    S3_SECRET_ACCESS_KEY = os.getenv('S3_SECRET_ACCESS_KEY')
+    AWS_S3_REGION_NAME = os.getenv('REGION_NAME')
+    AWS_ACCESS_KEY_ID = S3_USER_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = S3_SECRET_ACCESS_KEY
 
 # Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
 # you run `collectstatic`).
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+RESULTFILES_LOCATION = 'results' # where it writes to in S3
+DEFAULT_FILE_STORAGE = 'custom_storages.ResultStorage'
 
 # Take Bucket ACLs
 AWS_DEFAULT_ACL = None
 
-# For writing with io.StingIO
-DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
 # vim: ai et ts=4 sw=4 sts=4 nu ru
