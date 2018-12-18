@@ -14,7 +14,7 @@ from django.core.files.base import ContentFile
 # from django.core.files.storage import default_storage
 from django.conf import settings
 
-@task
+# @task
 def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
     ''' Sample:
     with io.StringIO() as fh:

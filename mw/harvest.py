@@ -29,13 +29,14 @@ def harvest(request, fancy=True):
             ),
     }
 
-    #heavy_lifting(submit_id=submit_id)
+    heavy_lifting(submit_id=submit_id)
 
-    from django.core.files.base import ContentFile
-    from django.core.files.storage import default_storage
-    fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
-    fh.write(submit_id)
-    fh.close()
+    # Used for testing, works
+    #from django.core.files.base import ContentFile
+    #from django.core.files.storage import default_storage
+    #fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
+    #fh.write(submit_id)
+    #fh.close()
 
     return render(request, 'mw/results.html', context)
 
