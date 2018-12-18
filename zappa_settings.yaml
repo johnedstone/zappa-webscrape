@@ -9,9 +9,10 @@ info:
   domain: "yourapp.yourdomain.com"
   s3_bucket: "your bucket"
   slim_handler: true
+  timeout_seconds: 300
   aws_environment_variables:
     DEBUG: "on"
-    VARS_ENCRYPTED: "off"
+    VARS_ENCRYPTED: "on"
     # settings for site to scrape:
     USER: "some user_encrypted_with_encrypted_helper"
     PW: "some passwd_encrypted_with_encrypted_helper"
@@ -21,9 +22,6 @@ info:
     #s3 for uploading results
     BUCKET_NAME: your_bucket_name
     REGION_NAME: your_bucket_region
-    S3_USER_ACCESS_KEY_ID: for_uploading_s3_result_encrypted_with_encrypted_helpers
-    S3_SECRET_ACCESS_KEY: for_uploading_s3_result_encrypted_with_encrypted_helpers
-    QUERY_RESULTS: "my_bucket/my_dir/myresults.file"
 
 # Keep this file in a secure place
 

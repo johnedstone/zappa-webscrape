@@ -31,7 +31,7 @@ Simple Zappa Webscraping with Selenium, Pandas, and BeautifulSoup
 * http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 
 ##### Problems writing from lambda to S3
-* **__Note: The notes here on VPC are not needed, the problem is a sessions problem_**
+* **_Note: The notes here on VPC are not needed, the problem is a sessions problem_**
 * Next: https://github.com/Miserlou/Zappa/issues/1043 - this explains the problem
 * https://realpython.com/python-boto3-aws-s3/
 * Key: https://gist.github.com/reggi/dc5f2620b7b4f515e68e46255ac042a7

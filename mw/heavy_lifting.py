@@ -11,10 +11,10 @@ from tabulate import tabulate
 import pandas as pd
 
 from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
+# from django.core.files.storage import default_storage
 from django.conf import settings
 
-#@task
+@task
 def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
     ''' Sample:
     with io.StringIO() as fh:
@@ -28,9 +28,9 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
     fh.close()
     '''
 
-    fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
-    fh.write(submit_id)
-    fh.close()
+    #fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
+    #fh.write(submit_id)
+    #fh.close()
     return
 
 #    #with io.StringIO() as fh:
