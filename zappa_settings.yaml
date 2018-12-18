@@ -23,6 +23,7 @@ info:
     REGION_NAME: your_bucket_region
     S3_USER_ACCESS_KEY_ID: for_uploading_s3_result_encrypted_with_encrypted_helpers
     S3_SECRET_ACCESS_KEY: for_uploading_s3_result_encrypted_with_encrypted_helpers
+    QUERY_RESULTS: "my_bucket/my_dir/myresults.file"
 
 # Keep this file in a secure place
 

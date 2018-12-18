@@ -29,3 +29,13 @@ Simple Zappa Webscraping with Selenium, Pandas, and BeautifulSoup
 #### S3 Django
 * https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/
 * http://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+
+##### Problems writing from lambda to S3
+* https://edgarroman.github.io/zappa-django-guide/aws_network/
+
+### How to mock a request
+
+```
+>>> request_factory = RequestFactory()
+>>> request = request_factory.get('/path', data={'name': u'test'})
+```

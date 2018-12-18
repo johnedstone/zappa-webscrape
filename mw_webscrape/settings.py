@@ -41,6 +41,7 @@ DASHBOARD = os.getenv('DASHBOARD') # Can not navigate directly
 ORDERS = os.getenv('ORDERS')
 S3_USER_ACCESS_KEY_ID = os.getenv('S3_USER_ACCESS_KEY_ID')
 S3_SECRET_ACCESS_KEY = os.getenv('S3_SECRET_ACCESS_KEY')
+QUERY_RESULTS = os.getenv('QUERY_RESULTS', 'path_to_write_S3_results')
 
 FRAMEWORK = os.getenv('FRAMEWORK', '')
 if FRAMEWORK == 'Zappa' and VARS_ENCRYPTED:
@@ -73,4 +74,6 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # Take Bucket ACLs
 AWS_DEFAULT_ACL = None
 
+# For writing with io.StingIO
+DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
 # vim: ai et ts=4 sw=4 sts=4 nu ru
