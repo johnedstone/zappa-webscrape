@@ -1,12 +1,12 @@
 ---
 info:
   django_settings: mw_webscrape.settings
-  profile_name: your_aws_profile_in_credentials_file
+  profile_name: your_aws_profile_in_credentials_file # Using this profile for both zappa and writing to S3, see README for more info
   project_name": your_project_name 
   aws_region: 'e.g., us-east-2'
   runtime: python3.6
   keep_warm: true
-  domain: "yourapp.yourdomain.com"
+  # domain: "yourapp.yourdomain.com" # not using
   s3_bucket: "your bucket"
   slim_handler: true
   timeout_seconds: 300
