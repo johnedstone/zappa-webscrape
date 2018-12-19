@@ -80,9 +80,12 @@ def main():
         table = soup.find_all('table')[0]
 
         df = pd.read_html(str(table))[0]
+        print('Raw table')
+        print(tabulate(df, headers='keys', tablefmt='psql'))
+
         last_column = df.columns[len(df.columns)-1]
-        df = df.drop([0], axis=0) \
-            .drop(columns=['Customer', 'Supply Cost', last_column]) \
+        #df = df.drop([0], axis=0) \ # this was an error, this drop
+        df = df.drop(columns=['Customer', 'Supply Cost', last_column]) \
             .astype({"Quantity": int})
 
 

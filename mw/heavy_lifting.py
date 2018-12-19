@@ -65,8 +65,7 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
 
         df = pd.read_html(str(table))[0]
         last_column = df.columns[len(df.columns)-1]
-        df = df.drop([0], axis=0) \
-            .drop(columns=['Customer', 'Supply Cost', last_column]) \
+        df = df.drop(columns=['Customer', 'Supply Cost', last_column]) \
             .astype({"Quantity": int})
 
         conversion = yaml.load(open('conversion.yaml'))
