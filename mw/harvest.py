@@ -29,7 +29,7 @@ def harvest(request, fancy=True):
             ),
     }
 
-    heavy_lifting(submit_id=submit_id)
+    heavy_lifting(submit_id=submit_id, fancy=fancy)
 
     # Used for testing, works
     #from django.core.files.base import ContentFile

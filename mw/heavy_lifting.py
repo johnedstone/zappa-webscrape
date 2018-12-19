@@ -90,17 +90,14 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
                 rows_to_keep.append(list(row)[1:])
 
         updated_df = pd.DataFrame(conversion_lists + rows_to_keep, columns=df.columns)
+        _sum = updated_df.groupby('Product Title')["Quantity"].sum()
+        _table = tabulate(df, headers='keys', tablefmt='psql')
 
         output = '''
-Submit ID: {}
 {}
             
 {}
-            '''.format(
-            submit_id,
-            df.groupby('Product Title')["Quantity"].sum(),
-            tabulate(df, headers='keys', tablefmt='psql')
-        )
+            '''.format(_sum, _table)
 
     except Exception as e:
         output = '{}'.format(e)
@@ -111,16 +108,22 @@ Submit ID: {}
     if fancy:
         output = '''
 <style>
-div {{
-    margin: 2em;
-    color: #005dab;
+div.mono {{
+    margin: 0.2em;
+    color: #000;
     font-family:"Lucida Console", Monaco, "Courier New", Courier, monospace;
     white-space:pre;
 }}
 </style>
-<div>Submit ID: {}</div>
-<div>{}</div>
+<div class="mono">Submit ID: {}</div>
+<div class="mono">{}</div>
 '''.format(submit_id, output)
+
+    else:
+        output = '''
+{}
+
+{}'''.format(submit_id, output)
 
     with io.StringIO() as fh:
         fh.write(output)

@@ -44,3 +44,6 @@ AdministraionAccess privliges, and use this both for deploying zappa and writing
 >>> request_factory = RequestFactory()
 >>> request = request_factory.get('/path', data={'name': u'test'})
 ```
+
+### Issues
+* Not sure why zappa bails occassionally
