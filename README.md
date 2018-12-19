@@ -46,4 +46,4 @@ AdministraionAccess privliges, and use this both for deploying zappa and writing
 ```
 
 ### Issues
-* Not sure why zappa bails occassionally
+* Not sure why zappa bails occassionally during deploying. Just undeploy and try again.
