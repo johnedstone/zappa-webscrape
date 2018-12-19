@@ -33,6 +33,14 @@ WSGI_APPLICATION = 'mw_webscrape.wsgi.application'
 
 DATABASES = {}
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+    },
+]
+
 CHROM_VERBOSITY = int(os.getenv('CHROM_VERBOSITY', '0'))  # 99 was the default
 URL = os.getenv('URL')
 USER = os.getenv('USER')
@@ -46,23 +54,12 @@ if FRAMEWORK == 'Zappa' and VARS_ENCRYPTED:
     USER = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(USER))['Plaintext'].decode('utf8')
     PW = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(PW))['Plaintext'].decode('utf8')
 
-    # collectstatic, not zappa, but don't interfere
-    # S3_USER_ACCESS_KEY_ID = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(S3_USER_ACCESS_KEY_ID))['Plaintext'].decode('utf8')
-    # S3_SECRET_ACCESS_KEY = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(S3_SECRET_ACCESS_KEY))['Plaintext'].decode('utf8')
+    # For writing to S3 w/o interfering with zappa profile 
+    RESULTS_S3_USER_ACCESS_KEY_ID = os.getenv('RESULTS_S3_USER_ACCESS_KEY_ID')
+    RESULTS_S3_USER_ACCESS_KEY_ID = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(RESULTS_S3_USER_ACCESS_KEY_ID))['Plaintext'].decode('utf8')
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-    },
-]
-
-## collectstatic
-AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKET_NAME')
-# Tell django-storages the domain to use to refer to static files, for templates
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
+    RESULTS_S3_SECRET_ACCESS_KEY = os.getenv('RESULTS_S3_SECRET_ACCESS_KEY')
+    RESULTS_S3_SECRET_ACCESS_KEY = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(RESULTS_S3_SECRET_ACCESS_KEY))['Plaintext'].decode('utf8')
 
 if not FRAMEWORK == 'Zappa' and not VARS_ENCRYPTED:
     # collectstatic, not zappa, but do, yes, interfere
@@ -73,6 +70,11 @@ if not FRAMEWORK == 'Zappa' and not VARS_ENCRYPTED:
     AWS_S3_REGION_NAME = os.getenv('REGION_NAME')
     AWS_ACCESS_KEY_ID = S3_USER_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY = S3_SECRET_ACCESS_KEY
+
+## collectstatic
+AWS_STORAGE_BUCKET_NAME = os.getenv('BUCKET_NAME')
+# Tell django-storages the domain to use to refer to static files, for templates
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 # Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
 # you run `collectstatic`).

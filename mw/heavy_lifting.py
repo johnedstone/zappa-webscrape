@@ -14,7 +14,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.conf import settings
 
-# @task
+@task
 def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
     ''' Sample:
     with io.StringIO() as fh:
@@ -22,7 +22,6 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
         path = default_storage.save('results/query_results.html', ContentFile(fh.getvalue().encode('utf-8')))
     or
 
-    # This works, but not async
     fh = default_storage.open('results.html', 'w') # can not get this from settings for some reason
     fh.write(submit_id)
     fh.close()

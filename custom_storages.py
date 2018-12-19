@@ -8,5 +8,8 @@ class StaticStorage(S3Boto3Storage):
 
 class ResultStorage(S3Boto3Storage):
     location = settings.RESULTFILES_LOCATION
+    #access_key_names = ['RESULTS_S3_USER_ACCESS_KEY_ID',]
+    #secret_key_names = ['RESULTS_S3_SECRET_ACCESS_KEY']
+    #security_token_names = ['RESULTS_AWS_S3_SESSION_TOKEN']
 
 # vim: ai et ts=4 sw=4 sts=4 nu ru
