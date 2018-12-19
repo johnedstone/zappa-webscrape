@@ -54,13 +54,6 @@ if FRAMEWORK == 'Zappa' and VARS_ENCRYPTED:
     USER = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(USER))['Plaintext'].decode('utf8')
     PW = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(PW))['Plaintext'].decode('utf8')
 
-    # For writing to S3 w/o interfering with zappa profile 
-    RESULTS_S3_USER_ACCESS_KEY_ID = os.getenv('RESULTS_S3_USER_ACCESS_KEY_ID')
-    RESULTS_S3_USER_ACCESS_KEY_ID = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(RESULTS_S3_USER_ACCESS_KEY_ID))['Plaintext'].decode('utf8')
-
-    RESULTS_S3_SECRET_ACCESS_KEY = os.getenv('RESULTS_S3_SECRET_ACCESS_KEY')
-    RESULTS_S3_SECRET_ACCESS_KEY = boto3.client('kms').decrypt(CiphertextBlob=base64.b64decode(RESULTS_S3_SECRET_ACCESS_KEY))['Plaintext'].decode('utf8')
-
 if not FRAMEWORK == 'Zappa' and not VARS_ENCRYPTED:
     # collectstatic, not zappa, but do, yes, interfere
     # so, only use when running collectstatic on the cli

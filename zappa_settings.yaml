@@ -19,7 +19,6 @@ info:
     URL: "some url"
     DASHBOARD: "some url"
     ORDERS: "some url"
-    #s3 for uploading results
     BUCKET_NAME: your_bucket_name
     REGION_NAME: your_bucket_region
 
