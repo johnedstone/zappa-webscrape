@@ -49,8 +49,7 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
     driver = webdriver.Chrome(executable_path=executable_path,
         chrome_options=chrome_options)
         
-    #try:
-    if 1 == 1:
+    try:
         driver.get(settings.URL)
         driver.find_element_by_id('username').send_keys(settings.USER)
         driver.find_element_by_id ('password').send_keys(settings.PW)
@@ -64,76 +63,69 @@ def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
         soup = BS(data,'lxml')
         table = soup.find_all('table')[0]
 
-        with io.StringIO() as fh:
-            fh.write('<div>Submit ID; {}</div>'.format(submit_id))
-            fh.write(data)
-            path = default_storage.save('results.html', ContentFile(fh.getvalue().encode('utf-8')))
+        df = pd.read_html(str(table))[0]
+        last_column = df.columns[len(df.columns)-1]
+        df = df.drop([0], axis=0) \
+            .drop(columns=['Customer', 'Supply Cost', last_column]) \
+            .astype({"Quantity": int})
 
-        return
+        conversion = yaml.load(open('conversion.yaml'))
+        conversion_keys = conversion.keys()
 
-##        df = pd.read_html(str(table))[0]
-##        last_column = df.columns[len(df.columns)-1]
-##        df = df.drop([0], axis=0) \
-##            .drop(columns=['Customer', 'Supply Cost', last_column]) \
-##            .astype({"Quantity": int})
-##
-##        conversion = yaml.load(open('conversion.yaml'))
-##        conversion_keys = conversion.keys()
-##
-##        conversion_lists = []
-##        rows_to_keep = []
-##
-##        for row in df.itertuples():
-##            if row[3] in conversion_keys: # if item name == is in conversion yaml
-##                ## conversion_lists.append(list(row)[1:]) # use this line for testing
-##                for k in conversion[row[3]].keys(): # get the keys of this item
-##                    new_row = []
-##                    new_row.append(row[1])
-##                    new_row.append(row[2])
-##                    new_row.append(k)
-##                    new_row.append(row[4] *  conversion[row[3]][k])
-##                    conversion_lists.append(new_row)
-##
-##            else:
-##                rows_to_keep.append(list(row)[1:])
-##
-##        updated_df = pd.DataFrame(conversion_lists + rows_to_keep, columns=df.columns)
-##
-##        output = '''
-##Submit ID: {}
-##{}
-##            
-##{}
-##            '''.format(
-##            submit_id,
-##            df.groupby('Product Title')["Quantity"].sum(),
-##            tabulate(df, headers='keys', tablefmt='psql')
-##        )
-##
-##    except Exception as e:
-##        output = '{}'.format(e)
-##
-##    finally:
-##        driver.close()
-##
-##    if fancy:
-##        output = '''
-##<style>
-##div {{
-##    margin: 2em;
-##    color: #005dab;
-##    font-family:"Lucida Console", Monaco, "Courier New", Courier, monospace;
-##    white-space:pre;
-##}}
-##</style>
-##<div>Submit ID: {}
-##<div>{}</div>
-##'''.format(submit_id, output)
-##
-##    with io.StringIO() as fh:
-##        fh.write('{}'.format())
-##        path = default_storage.save('results/query_results.html', ContentFile(fh.getvalue().encode('utf-8')))
-##
-##    return
-##
-### vim: ai et ts=4 sw=4 sts=4 nu ru
+        conversion_lists = []
+        rows_to_keep = []
+
+        for row in df.itertuples():
+            if row[3] in conversion_keys: # if item name == is in conversion yaml
+                ## conversion_lists.append(list(row)[1:]) # use this line for testing
+                for k in conversion[row[3]].keys(): # get the keys of this item
+                    new_row = []
+                    new_row.append(row[1])
+                    new_row.append(row[2])
+                    new_row.append(k)
+                    new_row.append(row[4] *  conversion[row[3]][k])
+                    conversion_lists.append(new_row)
+
+            else:
+                rows_to_keep.append(list(row)[1:])
+
+        updated_df = pd.DataFrame(conversion_lists + rows_to_keep, columns=df.columns)
+
+        output = '''
+Submit ID: {}
+{}
+            
+{}
+            '''.format(
+            submit_id,
+            df.groupby('Product Title')["Quantity"].sum(),
+            tabulate(df, headers='keys', tablefmt='psql')
+        )
+
+    except Exception as e:
+        output = '{}'.format(e)
+
+    finally:
+        driver.close()
+
+    if fancy:
+        output = '''
+<style>
+div {{
+    margin: 2em;
+    color: #005dab;
+    font-family:"Lucida Console", Monaco, "Courier New", Courier, monospace;
+    white-space:pre;
+}}
+</style>
+<div>Submit ID: {}</div>
+<div>{}</div>
+'''.format(submit_id, output)
+
+    with io.StringIO() as fh:
+        fh.write(output)
+        path = default_storage.save('results.html', ContentFile(fh.getvalue().encode('utf-8')))
+
+    return
+
+# vim: ai et ts=4 sw=4 sts=4 nu ru
