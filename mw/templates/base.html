@@ -1,0 +1,34 @@
+{% load static %}<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}MW-Artisan{% endblock %}</title>
+
+    <link rel="icon" href="{% static 'mw/favicon_1x1.png' %}" sizes="1x1" type="image/png" >
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        div.intro {
+            font-style: italic;
+        }
+        div {
+            color: #005dab;
+            margin: 1em;
+            font-family: Tahoma,Verdana,sans-serif;
+            margin: 1em 1em 1em 0;
+        }
+        #results {
+            margin: 0;
+        }
+        p, button {
+            color: #005dab;
+            margin: 0.2em;
+        }
+    </style>
+  </head>
+  <body>
+      {% block content %}
+      {% endblock content %}
+
+      {% block script %}
+      {% endblock script %}
+  </body>
+</html>
