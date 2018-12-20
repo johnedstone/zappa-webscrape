@@ -16,4 +16,12 @@ class ResultStorage(S3Boto3Storage):
 
     location = settings.RESULTFILES_LOCATION
 
+class FunWithStorage(S3Boto3Storage):
+    '''
+    https://docs.djangoproject.com/en/2.1/howto/custom-file-storage/
+    https://tartarus.org/james/diary/2013/07/18/fun-with-django-storage-backends
+    '''
+
+    location = settings.FUN_WITH_STORAGE
+
 # vim: ai et ts=4 sw=4 sts=4 nu ru

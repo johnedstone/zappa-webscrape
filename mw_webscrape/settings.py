@@ -81,4 +81,8 @@ DEFAULT_FILE_STORAGE = 'custom_storages.ResultStorage'
 # Take Bucket ACLs
 AWS_DEFAULT_ACL = None
 
+# FunWithStorage
+FUN_WITH_STORAGE = 'fun_with_storage'
+
+RESULTFILE_NAME = os.getenv('RESULTFILE_NAME', 'name_for_dev_file_name')
 # vim: ai et ts=4 sw=4 sts=4 nu ru

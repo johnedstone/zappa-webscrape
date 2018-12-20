@@ -41,6 +41,7 @@ AdministraionAccess privliges, and use this both for deploying zappa and writing
 ### How to mock a request
 
 ```
+>>> from django.test import RequestFactory
 >>> request_factory = RequestFactory()
 >>> request = request_factory.get('/path', data={'name': u'test'})
 ```

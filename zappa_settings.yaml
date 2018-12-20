@@ -21,6 +21,7 @@ info:
     ORDERS: "some url"
     BUCKET_NAME: your_bucket_name
     REGION_NAME: your_bucket_region
+    RESULTFILE_NAME: file_name
 
 # Keep this file in a secure place
 

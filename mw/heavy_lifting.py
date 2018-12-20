@@ -15,7 +15,29 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 
 @task
-def heavy_lifting(submit_id='unknown_submit_id', fancy=True):
+def banner_page(submit_id='unknown_submit_id',
+    results_timestamp='results_timestamp'):
+
+    output = '''
+<div>Submit ID: {}</div>
+<div class="some_padding">
+Your Totals are being calculated and will be available in 2-4 min.
+<br>
+Click the "Refresh Results" Button shortly to display your results.
+</div>
+'''.format(submit_id)
+
+    with io.StringIO() as fh:
+        fh.write(output)
+        path = default_storage.save(
+            '{}-{}.html'.format(
+                settings.RESULTFILE_NAME,
+                results_timestamp),
+            ContentFile(fh.getvalue().encode('utf-8')))
+
+@task
+def heavy_lifting(submit_id='unknown_submit_id',
+    fancy=True, results_timestamp='results_timestamp'):
     ''' Sample:
     with io.StringIO() as fh:
         fh.write('Submit ID; {}'.format(submit_id))
@@ -126,7 +148,11 @@ div.mono {{
 
     with io.StringIO() as fh:
         fh.write(output)
-        path = default_storage.save('results.html', ContentFile(fh.getvalue().encode('utf-8')))
+        path = default_storage.save(
+            '{}-{}.html'.format(
+                settings.RESULTFILE_NAME,
+                results_timestamp),
+            ContentFile(fh.getvalue().encode('utf-8')))
 
     return
 
