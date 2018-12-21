@@ -1,0 +1,154 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Submission</title>
+
+    <link rel="icon" href="https://mw-artisan.s3.amazonaws.com/static/mw/favicon_1x1.png" sizes="1x1" type="image/png" >
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- code from https://www.plus2net.com/javascript_tutorial/stopwatch.php  -->
+
+<script language=javascript>
+var h=0;
+var m=0;
+var s=0;
+function to_start(){
+
+switch(document.getElementById('btn').value)
+{
+case  'Stop Timer':
+window.clearInterval(tm); // stop the timer 
+document.getElementById('btn').value='Start Timer';
+break;
+case  'Start Timer':
+tm=window.setInterval('disp()',1000);
+document.getElementById('btn').value='Stop Timer';
+break;
+}
+}
+
+
+function disp(){
+// Format the output by adding 0 if it is single digit //
+if(s<10){var s1='0' + s;}
+else{var s1=s;}
+if(m<10){var m1='0' + m;}
+else{var m1=m;}
+if(h<10){var h1='0' + h;}
+else{var h1=h;}
+// Display the output //
+str= h1 + ':' + m1 +':' + s1 ;
+document.getElementById('n1').innerHTML=str;
+// Calculate the stop watch // 
+if(s<59){ 
+s=s+1;
+}else{
+s=0;
+m=m+1;
+if(m==60){
+m=0;
+h=h+1;
+} // end if  m ==60
+}// end if else s < 59
+// end of calculation for next display
+
+}
+</script>
+    <style>
+         .container {
+           margin:2rem;
+           font-family: Tahoma,Verdana,sans-serif;
+}
+       h1 {
+          font-size:2rem;
+}
+h2 {
+font-size:1rem;
+}
+         div {
+           margin-top:1rem;
+}
+        
+        
+        div {
+            color: #005dab;
+                       
+                   }
+        #results {
+            margin: 0;
+        }
+        p, button {
+            color: #005dab;
+            margin: 0.2em;
+        }
+    </style>
+  </head>
+  <body class="container">
+
+    <h1> Bakery Orders from MarketTime</h1>
+ <h2 style="color:#880000;">
+          Time of display</strong>: Thu Dec 20 09:05:16 AM 2018</strong> -- note time</h2>
+
+<button style="background-color: #880000; padding: 10px; color: white; font-size:20px; ">Start all over</button>  (Dev. Note: This is basically refreshing the page. -- not working now)
+
+<br>
+<br>
+
+
+
+
+
+<button><h3>CLICK HERE FOR FINAL WEDNESDAY MORNING ORDERS</h3></button>
+(dev note: goes to a different page -- not working)
+      
+     
+
+<div class="some_padding">
+<h1>TOTAL ORDERS UP TO LATE TUESDAY (MIDNIGHT)</h1>
+
+<hr>
+<hr>
+
+
+
+                 
+
+
+<span style="font-weight:bold; font-size:20px;">Your Totals are being calculated. Please wait 4 min <input type="button" name="btn" id='btn' value="Start Timer" onclick="to_start()";> and then click 'View Results' below.</span>
+<br>
+<br>
+
+
+<div id=n1 style="z-index: 2; position: relative; right: 0px; top: 10px; background-color: #00cc33;
+ width: 100px; padding: 10px; color: white; font-size:20px; border: #0000cc 2px dashed; "> </div>
+<br>
+      <div id="results">
+
+<button><h3>View Results </h3></button> This button isn't working.  It should show the results below here.
+<div class="some_padding">
+
+<br>
+If your wait wasn't long enough, when you click the View Resutls button, nothing will happen.  Then, you need to start all over (button at the top).<br>
+<br>If your wait was long enough but nothing is showing.......???  no orders, they are erased?
+
+<br>
+<br>Dev note:  There is some crazy button happening.... disregard all buttons except the timer.
+
+</div>
+
+
+      </div>
+
+
+      
+      <script>
+      $(document).ready(function() {
+          $("button").click(function() {
+              $("#results").load("https://mw-artisan.s3.amazonaws.com/results/results-20181220-090516.html", function(html) {
+              console.log("Results updated");
+              });
+          });
+      });
+      </script>
+
+  </body>
+</html>

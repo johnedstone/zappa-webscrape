@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Pan{% endblock %}
+{% block content %}
+      <div id="results">
+        <div class="some_padding"></div>
+      </div>
+{% endblock content %}
+{% block script %}
+      <script>
+      $(document).ready(function() {
+          $("#results").load("{{ results_path }}", function() {
+              console.log("Results updated");
+          });
+      });
+      </script>
+{% endblock script %}

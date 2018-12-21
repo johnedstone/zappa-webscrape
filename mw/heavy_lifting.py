@@ -37,7 +37,8 @@ Click the "Refresh Results" Button shortly to display your results.
 
 @task
 def heavy_lifting(submit_id='unknown_submit_id',
-    fancy=True, results_timestamp='results_timestamp'):
+    fancy=True, results_timestamp='results_timestamp',
+    mw_cron=False):
     ''' Sample:
     with io.StringIO() as fh:
         fh.write('Submit ID; {}'.format(submit_id))
@@ -146,12 +147,17 @@ div.mono {{
 
 {}'''.format(submit_id, output)
 
+    if mw_cron:
+        results_file_name = 'results.html'
+    else:
+        results_file_name = '{}-{}.html'.format(
+            settings.RESULTFILE_NAME,
+            results_timestamp,
+            )
+
     with io.StringIO() as fh:
         fh.write(output)
-        path = default_storage.save(
-            '{}-{}.html'.format(
-                settings.RESULTFILE_NAME,
-                results_timestamp),
+        path = default_storage.save(results_file_name,
             ContentFile(fh.getvalue().encode('utf-8')))
 
     return

@@ -10,6 +10,9 @@ info:
   s3_bucket: "your bucket"
   slim_handler: true
   timeout_seconds: 300
+  events:
+    - function: your_module.your_function
+      expression: "cron(55 0/2 ? * MON-TUE *)"
   aws_environment_variables:
     DEBUG: "on"
     VARS_ENCRYPTED: "on"

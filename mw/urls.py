@@ -13,6 +13,8 @@ urlpatterns = [
     path('plain/', harvest, {'fancy': False}, name='plain'),
     path('more/', views.simple, name='more'),
     path('fun-with-storage/', fun_with_storage, name='fun_with_storage'),
+    path('mw-cron/', harvest, {'mw_cron': True}, name='mw_cron'),
+    path('pan/', views.pan, name='pan'),
 ]
 
 # vim: ai et ts=4 sw=4 sts=4 nu ru

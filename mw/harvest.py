@@ -21,24 +21,39 @@ def indy_time():
     return (submit_id, results_timestamp)
 
 
-def harvest(request, fancy=True):
+def harvest(request, fancy=True, mw_cron=False):
 
     submit_id, results_timestamp = indy_time()
+
+    if mw_cron:
+        results_file_name = 'results.html'
+    else:
+        results_file_name = '{}-{}.html'.format(
+            settings.RESULTFILE_NAME,
+            results_timestamp,
+            )
+
+
+    results_path = 'https://{}/{}/{}'.format(
+            settings.AWS_S3_CUSTOM_DOMAIN,
+            settings.RESULTFILES_LOCATION,
+            results_file_name,
+            )
+
     context = {
         'submit_id': submit_id,
         'fancy': fancy,
-        'results_path': 'https://{}/{}/{}-{}.html'.format(
-            settings.AWS_S3_CUSTOM_DOMAIN,
-            settings.RESULTFILES_LOCATION,
-            settings.RESULTFILE_NAME,
-            results_timestamp,
-            ),
+        'results_path': results_path,
+        'mw_cron': mw_cron,
     }
 
-    banner_page(submit_id=submit_id, results_timestamp=results_timestamp)
+    if not mw_cron:
+        banner_page(submit_id=submit_id, results_timestamp=results_timestamp)
 
     heavy_lifting(submit_id=submit_id, fancy=fancy,
-        results_timestamp=results_timestamp)
+        results_timestamp=results_timestamp,
+        mw_cron=mw_cron,
+        )
 
     return render(request, 'mw/results.html', context)
 

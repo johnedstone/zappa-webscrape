@@ -20,7 +20,7 @@ Click the "Refresh Results" Button shortly to display your results.
       <script>
       $(document).ready(function() {
           $("button").click(function() {
-              $("#results").load("{{ results_path }}", function(html) {
+              $("#results").load("{{ results_path }}", function() {
               console.log("Results updated");
               });
           });
