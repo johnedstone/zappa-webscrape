@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 from .heavy_lifting import heavy_lifting, banner_page
 
-HUMAN_DATETIME = "%a %b %-d %I:%M:%S %p %Y"
+HUMAN_DATETIME = "%a %b %-d %I:%M:%S %p %Y %Z"
 RESULTS_TIMESTAMP = "%Y%m%d-%H%M%S"
 
 def indy_time():
