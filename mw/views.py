@@ -35,17 +35,15 @@ def baker_report():
     mw_cron=True
     ) 
 
+    return
+
 def baker_report_wednesday():
     '''
     Workaround for this bug:
     https://github.com/Miserlou/Zappa/pull/1051
     '''
 
-    submit_id, results_timestamp = indy_time()
-
-    heavy_lifting(
-    submit_id=submit_id,
-    mw_cron=True
-    ) 
+    baker_report()
+    return
 
 # vim: ai et ts=4 sw=4 sts=4 nu ru
