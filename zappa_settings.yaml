@@ -12,11 +12,10 @@ info:
   timeout_seconds: 300
   events:
     - function: "mw.views.baker_report"
-      expression: "cron(55 0/2 ? * MON-TUE *)"
-    - function: "mw.views.baker_report"
-      expression: "cron(55 0,2,4, ? * WED *)"
-    - function: "mw.views.baker_report"
-      expression: "cron(30 1, ? * SAT *)"
+      expression: "cron(45 0/4 ? * * *)"
+    #    - "cron(55 0/2 ? * MON-TUE *)"
+    #    - "cron(55 0,2,4, ? * WED *)"
+    # https://github.com/Miserlou/Zappa/pull/1051
   aws_environment_variables:
     DEBUG: "on"
     VARS_ENCRYPTED: "on"
