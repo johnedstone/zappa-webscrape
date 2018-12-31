@@ -48,7 +48,9 @@ def harvest(request, fancy=True, mw_cron=False):
     }
 
     if not mw_cron:
-        banner_page(submit_id=submit_id, results_timestamp=results_timestamp)
+        # banner_page(submit_id=submit_id, results_timestamp=results_timestamp)
+        # above: race conditions, could/does overwrite heavy_lifting
+        pass
 
     heavy_lifting(submit_id=submit_id, fancy=fancy,
         results_timestamp=results_timestamp,

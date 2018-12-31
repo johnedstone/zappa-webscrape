@@ -12,9 +12,9 @@ info:
   timeout_seconds: 300
   events:
     - function: "mw.views.baker_report"
-      expression: "cron(55 0/2 ? * MON-TUE *)"
+      expression: "cron(55 * ? * MON-TUE *)"
     - function: "mw.views.baker_report_wednesday"
-      expression: "cron(55 0,2,4, ? * WED *)"
+      expression: "cron(55 0-5, ? * WED *)"
   aws_environment_variables:
     DEBUG: "on"
     VARS_ENCRYPTED: "on"
