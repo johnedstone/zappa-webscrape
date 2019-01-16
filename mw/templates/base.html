@@ -3,7 +3,12 @@
     <meta charset="utf-8">
     <title>{% block title %}MW-Artisan{% endblock %}</title>
 
-    <link rel="icon" href="{% static 'mw/favicon_1x1.png' %}" sizes="1x1" type="image/png" >
+    <link rel="icon" href="{% static 'mw/favicon_1x1.png' %}" sizes="1x1" type="image/png">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <style>
         div.intro {
@@ -21,6 +26,18 @@
         p, button {
             color: #005dab;
             margin: 0.2em;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+           background-color: honeydew;
+        }
+        .table-striped tbody tr:nth-of-type(even) {
+           background-color: mintcream;
+        }
+        .table-striped tbody td {
+           font-weight: bold;
+        }
+        .table-striped {
+          font-size: 1.2em;
         }
     </style>
   </head>

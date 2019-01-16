@@ -72,6 +72,7 @@ def heavy_lifting(submit_id='unknown_submit_id',
     driver = webdriver.Chrome(executable_path=executable_path,
         chrome_options=chrome_options)
         
+    is_error = False
     try:
         driver.get(settings.URL)
         driver.find_element_by_id('username').send_keys(settings.USER)
@@ -112,7 +113,12 @@ def heavy_lifting(submit_id='unknown_submit_id',
                 rows_to_keep.append(list(row)[1:])
 
         updated_df = pd.DataFrame(conversion_lists + rows_to_keep, columns=df.columns)
-        _sum = updated_df.groupby('Product Title')["Quantity"].sum()
+        _sum = updated_df.groupby('Product Title')["Quantity"].sum() # this is a series groupby object
+        _sum_pretty = pd.DataFrame(_sum).to_html(classes=['table', 'table-striped', 'table-sm'],
+                                                 table_id="1",
+                                                 border=0,
+                                                 justify="left",
+                                                 header=False)
         _table = tabulate(df, headers='keys', tablefmt='psql')
 
         output = '''
@@ -123,11 +129,12 @@ def heavy_lifting(submit_id='unknown_submit_id',
 
     except Exception as e:
         output = '{}'.format(e)
+        is_error = True
 
     finally:
         driver.close()
 
-    if fancy:
+    if not is_error and fancy:
         output = '''
 <style>
 div.mono {{
@@ -137,9 +144,10 @@ div.mono {{
     white-space:pre;
 }}
 </style>
+<div class="table-responsive">{}</div>
 <div class="mono">Submit ID: {}</div>
 <div class="mono">{}</div>
-'''.format(submit_id, output)
+'''.format(_sum_pretty, submit_id, _table)
 
     else:
         output = '''
