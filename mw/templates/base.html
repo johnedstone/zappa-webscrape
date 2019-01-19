@@ -1,6 +1,8 @@
-{% load static %}<html lang="en">
+{% load static %}<!doctype html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}MW-Artisan{% endblock %}</title>
 
     <link rel="icon" href="{% static 'mw/favicon_1x1.png' %}" sizes="1x1" type="image/png">
@@ -9,7 +11,6 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
           crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <style>
         div.intro {
             font-style: italic;
@@ -39,12 +40,29 @@
         .table-striped {
           font-size: 1.2em;
         }
+        body {
+            background-color: azure;
+            padding: 0 0 0 1em;
+        }
+        {% comment %}
+          https://www.rapidtables.com/web/color/green-color.html
+          https://html-color.codes/color-groups/orange
+          http://www.html-color-names.com/honeydew.php
+          https://www.w3schools.com/colors/colors_groups.asp
+        {% endcomment %}
     </style>
   </head>
   <body>
       {% block content %}
       {% endblock content %}
 
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+              integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+              crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+              integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+              crossorigin="anonymous"></script>
       {% block script %}
       {% endblock script %}
   </body>

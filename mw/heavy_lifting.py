@@ -144,7 +144,7 @@ div.mono {{
     white-space:pre;
 }}
 </style>
-<div class="table-responsive">{}</div>
+<div class="table-responsive w-95">{}</div>
 <div class="mono">Submit ID: {}</div>
 <div class="mono">{}</div>
 '''.format(_sum_pretty, submit_id, _table)
